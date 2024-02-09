@@ -6,6 +6,11 @@ This script modifies a specific registry key to adjust the behavior of the User 
 
 
 
+## Installation
+
+Simply Download the script from the Releases Page and run it as Admin.
+
+    
 ## Badges
 
 
