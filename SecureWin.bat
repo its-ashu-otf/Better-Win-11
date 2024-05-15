@@ -15,9 +15,6 @@ if %errorLevel% == 0 (
 )
 
 :runScript
-set "registryPath=HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System"
-set "valueName=ConsentPromptBehaviorAdmin"
-set "newValue=1"
 
 echo Modifying registry key: %registryPath%
 
