@@ -8,6 +8,9 @@ Windows Registry Editor Version 5.00
 [HKEY_CURRENT_USER\Software\Microsoft\DirectX\UserGpuPreferences]
 "DirectXUserGlobalSettings"="SwapEffectUpgradeEnable=0;"
 
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\GraphicsDrivers]
+"HwSchMode"=dword:00000002
+
 ; Disable Game Bar
 
 [HKEY_USERS\.DEFAULT\Software\Microsoft\GameBar]
