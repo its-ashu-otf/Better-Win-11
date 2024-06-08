@@ -2,13 +2,14 @@
 setlocal
 title Update OEM Information
 
-REM Check if the script is run as administrator
-net session >nul 2>&1
-if %errorlevel% neq 0 (
-    echo Error: Administrative privileges are required to run this script.
-    echo Please restart this script as an administrator.
-    pause
-    exit /b 1
+:: Ensure admin privileges
+fltmc >nul 2>&1 || (
+    echo Administrator privileges are required.
+    PowerShell Start -Verb RunAs '%0' 2> nul || (
+        echo Right-click on the script and select "Run as administrator".
+        pause & exit 1
+    )
+    exit 0
 )
 
 echo Welcome to the OEM Info Editor by @its_ashu_otf
