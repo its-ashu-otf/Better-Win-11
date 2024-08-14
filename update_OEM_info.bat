@@ -1,6 +1,6 @@
 @echo off
 setlocal
-title Update OEM Information
+title OEM Info Editor v0.3
 
 :: Ensure admin privileges
 fltmc >nul 2>&1 || (

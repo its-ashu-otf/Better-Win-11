@@ -10,7 +10,7 @@ fltmc >nul 2>&1 || (
 )
 :: Initialize environment
 setlocal EnableExtensions DisableDelayedExpansion
-title Dual Boot Time Fix
+title Dual Boot Time Fix v1.0
 
 :: ----------------------------------------------------------
 :: ---------Set NTP (time) server to `pool.ntp.org`----------
