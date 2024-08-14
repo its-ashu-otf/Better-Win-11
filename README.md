@@ -17,3 +17,15 @@ Full on GUI toolkit with all tweaks in One Place
 Just Place it under sources folder in Windows Installer Bootable Drive.
 
 #### [Custom unattended.xml for Custom Actions During Windows Installation](https://gist.github.com/its-ashu-otf/af6acb77bb030acd3dea4e9cfab58e40)
+
+
+## Some More Scripts for Windows 11
+
+[OptimumWindows](https://github.com/its-hritika/OptimumWindows)
+- For Disabling Hyper-V Completely for Further Performance Boost. (Don't Use if you prefer WSL or Windows Sandbox.)
+
+[WinUtil by @christitustech](https://github.com/ChrisTitusTech/winutil) 
+
+```powershell
+irm christitus.com/win | iex
+```
