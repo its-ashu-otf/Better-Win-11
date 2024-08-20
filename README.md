@@ -16,7 +16,7 @@ Full on GUI toolkit with all tweaks in One Place
 #### [ei.cfg - For Selecting Windows Editions during Windows Installation.](https://gist.github.com/its-ashu-otf/9bb8a35b0a3e2532784afec1148f56b9)
 Just Place it under sources folder in Windows Installer Bootable Drive.
 
-## [Custom unattended.xml for Custom Actions During Windows Installation]
+## Custom unattended.xml for Custom Actions During Windows Installation
 - Added A new unattended.xml
 - Disable Automatic Driver Updates Offered by Windows
 - Disable Automatic Encryption Enabled by Bitlocker.
