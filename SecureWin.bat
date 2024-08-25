@@ -1,6 +1,5 @@
 @echo off
-
-title Secure Windows by its-ashu-otf
+title Secure Windows v2.0 by its-ashu-otf
 fltmc >nul 2>&1 || (
     echo Administrator privileges are required.
     PowerShell Start -Verb RunAs '%0' 2> nul || (
@@ -11,7 +10,6 @@ fltmc >nul 2>&1 || (
 )
 :: Initialize environment
 setlocal EnableExtensions DisableDelayedExpansion
-
 
 :: ----------------------------------------------------------
 :: -------Enable strong Diffie-Hellman key requirement-------
@@ -375,24 +373,6 @@ PowerShell -ExecutionPolicy Unrestricted -Command "Get-WindowsCapability -Online
 :: ----------------------------------------------------------
 
 
-:: ----------------------------------------------------------
-:: -----Disable Cloud Clipboard (breaks clipboard sync)------
-:: ----------------------------------------------------------
-echo --- Disable Cloud Clipboard (breaks clipboard sync)
-PowerShell -ExecutionPolicy Unrestricted -Command "$data = '0'; reg add 'HKLM\SOFTWARE\Policies\Microsoft\Windows\System' /v 'AllowCrossDeviceClipboard' /t 'REG_DWORD' /d "^""$data"^"" /f"
-PowerShell -ExecutionPolicy Unrestricted -Command "$data = '0'; reg add 'HKCU\Software\Microsoft\Clipboard' /v 'CloudClipboardAutomaticUpload' /t 'REG_DWORD' /d "^""$data"^"" /f"
-:: ----------------------------------------------------------
-
-
-:: Disable background clipboard data collection (`cbdhsvc`) (breaks clipboard history and sync)
-echo --- Disable background clipboard data collection (`cbdhsvc`) (breaks clipboard history and sync)
-:: Disable per-user "cbdhsvc" service for all users
-PowerShell -ExecutionPolicy Unrestricted -Command "$serviceQuery = 'cbdhsvc'; <# -- 1. Skip if service does not exist #>; $service = Get-Service -Name $serviceQuery -ErrorAction SilentlyContinue; if(!$service) { Write-Host "^""Service query `"^""$serviceQuery`"^"" did not yield any results, no need to disable it."^""; Exit 0; }; $serviceName = $service.Name; Write-Host "^""Disabling service: `"^""$serviceName`"^""."^""; <# -- 2. Stop if running #>; if ($service.Status -eq [System.ServiceProcess.ServiceControllerStatus]::Running) { Write-Host "^""`"^""$serviceName`"^"" is running, trying to stop it."^""; try { Stop-Service -Name "^""$serviceName"^"" -Force -ErrorAction Stop; Write-Host "^""Stopped `"^""$serviceName`"^"" successfully."^""; } catch { Write-Warning "^""Could not stop `"^""$serviceName`"^"", it will be stopped after reboot: $_"^""; }; } else { Write-Host "^""`"^""$serviceName`"^"" is not running, no need to stop."^""; }; <# -- 3. Skip if service info is not found in registry #>; $registryKey = "^""HKLM:\SYSTEM\CurrentControlSet\Services\$serviceName"^""; if(!(Test-Path $registryKey)) { Write-Host "^""`"^""$registryKey`"^"" is not found in registry, cannot enable it."^""; Exit 0; }; <# -- 4. Skip if already disabled #>; if( $(Get-ItemProperty -Path "^""$registryKey"^"").Start -eq 4) { Write-Host "^""`"^""$serviceName`"^"" is already disabled from start, no further action is needed."^""; Exit 0; }; <# -- 5. Disable service #>; try { Set-ItemProperty $registryKey -Name Start -Value 4 -Force -ErrorAction Stop; Write-Host "^""Disabled `"^""$serviceName`"^"" successfully."^""; } catch { Write-Error "^""Could not disable `"^""$serviceName`"^"": $_"^""; }"
-:: Disable per-user "cbdhsvc" service for individual user accounts
-PowerShell -ExecutionPolicy Unrestricted -Command "$serviceQuery = 'cbdhsvc_*'; <# -- 1. Skip if service does not exist #>; $service = Get-Service -Name $serviceQuery -ErrorAction SilentlyContinue; if(!$service) { Write-Host "^""Service query `"^""$serviceQuery`"^"" did not yield any results, no need to disable it."^""; Exit 0; }; $serviceName = $service.Name; Write-Host "^""Disabling service: `"^""$serviceName`"^""."^""; <# -- 2. Stop if running #>; if ($service.Status -eq [System.ServiceProcess.ServiceControllerStatus]::Running) { Write-Host "^""`"^""$serviceName`"^"" is running, trying to stop it."^""; try { Stop-Service -Name "^""$serviceName"^"" -Force -ErrorAction Stop; Write-Host "^""Stopped `"^""$serviceName`"^"" successfully."^""; } catch { Write-Warning "^""Could not stop `"^""$serviceName`"^"", it will be stopped after reboot: $_"^""; }; } else { Write-Host "^""`"^""$serviceName`"^"" is not running, no need to stop."^""; }; <# -- 3. Skip if service info is not found in registry #>; $registryKey = "^""HKLM:\SYSTEM\CurrentControlSet\Services\$serviceName"^""; if(!(Test-Path $registryKey)) { Write-Host "^""`"^""$registryKey`"^"" is not found in registry, cannot enable it."^""; Exit 0; }; <# -- 4. Skip if already disabled #>; if( $(Get-ItemProperty -Path "^""$registryKey"^"").Start -eq 4) { Write-Host "^""`"^""$serviceName`"^"" is already disabled from start, no further action is needed."^""; Exit 0; }; <# -- 5. Disable service #>; try { Set-ItemProperty $registryKey -Name Start -Value 4 -Force -ErrorAction Stop; Write-Host "^""Disabled `"^""$serviceName`"^"" successfully."^""; } catch { Write-Error "^""Could not disable `"^""$serviceName`"^"": $_"^""; }"
-:: ----------------------------------------------------------
-
-
 :: Mitigate Spectre Variant 2 and Meltdown in host operating system
 echo --- Mitigate Spectre Variant 2 and Meltdown in host operating system
 PowerShell -ExecutionPolicy Unrestricted -Command "$data = '3'; reg add 'HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management' /v 'FeatureSettingsOverrideMask' /t 'REG_DWORD' /d "^""$data"^"" /f"
@@ -450,16 +430,9 @@ PowerShell -ExecutionPolicy Unrestricted -Command "$data = '0'; reg add 'HKLM\SO
 :: ----------------------------------------------------------
 
 
-:: ----------------------------------------------------------
-:: -----------Disable "Windows Connect Now" wizard-----------
-:: ----------------------------------------------------------
-echo --- Disable "Windows Connect Now" wizard
-PowerShell -ExecutionPolicy Unrestricted -Command "$data = '1'; reg add 'HKLM\Software\Policies\Microsoft\Windows\WCN\UI' /v 'DisableWcnUi' /t 'REG_DWORD' /d "^""$data"^"" /f"
-PowerShell -ExecutionPolicy Unrestricted -Command "$data = '0'; reg add 'HKLM\SOFTWARE\Policies\Microsoft\Windows\WCN\Registrars' /v 'DisableFlashConfigRegistrar' /t 'REG_DWORD' /d "^""$data"^"" /f"
-PowerShell -ExecutionPolicy Unrestricted -Command "$data = '0'; reg add 'HKLM\SOFTWARE\Policies\Microsoft\Windows\WCN\Registrars' /v 'DisableInBand802DOT11Registrar' /t 'REG_DWORD' /d "^""$data"^"" /f"
-PowerShell -ExecutionPolicy Unrestricted -Command "$data = '0'; reg add 'HKLM\SOFTWARE\Policies\Microsoft\Windows\WCN\Registrars' /v 'DisableUPnPRegistrar' /t 'REG_DWORD' /d "^""$data"^"" /f"
-PowerShell -ExecutionPolicy Unrestricted -Command "$data = '0'; reg add 'HKLM\SOFTWARE\Policies\Microsoft\Windows\WCN\Registrars' /v 'DisableWPDRegistrar' /t 'REG_DWORD' /d "^""$data"^"" /f"
-PowerShell -ExecutionPolicy Unrestricted -Command "$data = '0'; reg add 'HKLM\SOFTWARE\Policies\Microsoft\Windows\WCN\Registrars' /v 'EnableRegistrars' /t 'REG_DWORD' /d "^""$data"^"" /f"
+:: Enable Structured Exception Handling Overwrite Protection (SEHOP)
+echo --- Enable Structured Exception Handling Overwrite Protection (SEHOP)
+PowerShell -ExecutionPolicy Unrestricted -Command "$data = '0'; reg add 'HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\kernel' /v 'DisableExceptionChainValidation' /t 'REG_DWORD' /d "^""$data"^"" /f"
 :: ----------------------------------------------------------
 
 
@@ -474,11 +447,64 @@ PowerShell -ExecutionPolicy Unrestricted -Command "$featureName = 'MicrosoftWind
 :: ----------------------------------------------------------
 
 
-:: Enable Structured Exception Handling Overwrite Protection (SEHOP)
-echo --- Enable Structured Exception Handling Overwrite Protection (SEHOP)
-PowerShell -ExecutionPolicy Unrestricted -Command "$data = '0'; reg add 'HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\kernel' /v 'DisableExceptionChainValidation' /t 'REG_DWORD' /d "^""$data"^"" /f"
+:: ----------------------------------------------------------
+:: -----------Disable "Windows Connect Now" wizard-----------
+:: ----------------------------------------------------------
+echo --- Disable "Windows Connect Now" wizard
+PowerShell -ExecutionPolicy Unrestricted -Command "$data = '1'; reg add 'HKLM\Software\Policies\Microsoft\Windows\WCN\UI' /v 'DisableWcnUi' /t 'REG_DWORD' /d "^""$data"^"" /f"
+PowerShell -ExecutionPolicy Unrestricted -Command "$data = '0'; reg add 'HKLM\SOFTWARE\Policies\Microsoft\Windows\WCN\Registrars' /v 'DisableFlashConfigRegistrar' /t 'REG_DWORD' /d "^""$data"^"" /f"
+PowerShell -ExecutionPolicy Unrestricted -Command "$data = '0'; reg add 'HKLM\SOFTWARE\Policies\Microsoft\Windows\WCN\Registrars' /v 'DisableInBand802DOT11Registrar' /t 'REG_DWORD' /d "^""$data"^"" /f"
+PowerShell -ExecutionPolicy Unrestricted -Command "$data = '0'; reg add 'HKLM\SOFTWARE\Policies\Microsoft\Windows\WCN\Registrars' /v 'DisableUPnPRegistrar' /t 'REG_DWORD' /d "^""$data"^"" /f"
+PowerShell -ExecutionPolicy Unrestricted -Command "$data = '0'; reg add 'HKLM\SOFTWARE\Policies\Microsoft\Windows\WCN\Registrars' /v 'DisableWPDRegistrar' /t 'REG_DWORD' /d "^""$data"^"" /f"
+PowerShell -ExecutionPolicy Unrestricted -Command "$data = '0'; reg add 'HKLM\SOFTWARE\Policies\Microsoft\Windows\WCN\Registrars' /v 'EnableRegistrars' /t 'REG_DWORD' /d "^""$data"^"" /f"
 :: ----------------------------------------------------------
 
+
+:: ----------------------------------------------------------
+:: -----Disable Cloud Clipboard (breaks clipboard sync)------
+:: ----------------------------------------------------------
+echo --- Disable Cloud Clipboard (breaks clipboard sync)
+PowerShell -ExecutionPolicy Unrestricted -Command "$data = '0'; reg add 'HKLM\SOFTWARE\Policies\Microsoft\Windows\System' /v 'AllowCrossDeviceClipboard' /t 'REG_DWORD' /d "^""$data"^"" /f"
+PowerShell -ExecutionPolicy Unrestricted -Command "$data = '0'; reg add 'HKCU\Software\Microsoft\Clipboard' /v 'CloudClipboardAutomaticUpload' /t 'REG_DWORD' /d "^""$data"^"" /f"
+:: ----------------------------------------------------------
+
+
+:: ----------------------------------------------------------
+:: ---------Remove the controversial `default0` user---------
+:: ----------------------------------------------------------
+echo --- Remove the controversial `default0` user
+net user defaultuser0 /delete 2>nul
+:: ----------------------------------------------------------
+
+
+:: ----------------------------------------------------------
+:: ----------------------Disable Recall----------------------
+:: ----------------------------------------------------------
+echo --- Disable Recall
+PowerShell -ExecutionPolicy Unrestricted -Command "$data = '1'; reg add 'HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsCopilot' /v 'DisableAIDataAnalysis' /t 'REG_DWORD' /d "^""$data"^"" /f"
+:: ----------------------------------------------------------
+
+
+:: ----------------------------------------------------------
+:: -------Disable typing feedback (sends typing data)--------
+:: ----------------------------------------------------------
+echo --- Disable typing feedback (sends typing data)
+PowerShell -ExecutionPolicy Unrestricted -Command "$data = '0'; reg add 'HKLM\SOFTWARE\Microsoft\Input\TIPC' /v 'Enabled' /t 'REG_DWORD' /d "^""$data"^"" /f"
+PowerShell -ExecutionPolicy Unrestricted -Command "$data = '0'; reg add 'HKCU\SOFTWARE\Microsoft\Input\TIPC' /v 'Enabled' /t 'REG_DWORD' /d "^""$data"^"" /f"
+:: ----------------------------------------------------------
+
+
+:: ----------------------------------------------------------
+:: -------Disable text and handwriting data collection-------
+:: ----------------------------------------------------------
+echo --- Disable text and handwriting data collection
+PowerShell -ExecutionPolicy Unrestricted -Command "$data = '1'; reg add 'HKLM\SOFTWARE\Policies\Microsoft\InputPersonalization' /v 'RestrictImplicitInkCollection' /t 'REG_DWORD' /d "^""$data"^"" /f"
+PowerShell -ExecutionPolicy Unrestricted -Command "$data = '1'; reg add 'HKLM\SOFTWARE\Policies\Microsoft\InputPersonalization' /v 'RestrictImplicitTextCollection' /t 'REG_DWORD' /d "^""$data"^"" /f"
+PowerShell -ExecutionPolicy Unrestricted -Command "$data = '1'; reg add 'HKLM\SOFTWARE\Policies\Microsoft\Windows\HandwritingErrorReports' /v 'PreventHandwritingErrorReports' /t 'REG_DWORD' /d "^""$data"^"" /f"
+PowerShell -ExecutionPolicy Unrestricted -Command "$data = '1'; reg add 'HKLM\SOFTWARE\Policies\Microsoft\Windows\TabletPC' /v 'PreventHandwritingDataSharing' /t 'REG_DWORD' /d "^""$data"^"" /f"
+PowerShell -ExecutionPolicy Unrestricted -Command "$data = '0'; reg add 'HKLM\SOFTWARE\Policies\Microsoft\InputPersonalization' /v 'AllowInputPersonalization' /t 'REG_DWORD' /d "^""$data"^"" /f"
+PowerShell -ExecutionPolicy Unrestricted -Command "$data = '0'; reg add 'HKCU\SOFTWARE\Microsoft\InputPersonalization\TrainedDataStore' /v 'HarvestContacts' /t 'REG_DWORD' /d "^""$data"^"" /f"
+:: ----------------------------------------------------------
 
 :: Pause the script to view the final state
 pause
