@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="utf-8"?>
+<unattend xmlns="urn:schemas-microsoft-com:unattend" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+	<!--https://schneegans.de/windows/unattend-generator/?LanguageMode=Unattended&UILanguage=en-US&Locale=en-IN&Keyboard=00004009&GeoLocation=113&ProcessorArchitecture=amd64&BypassNetworkCheck=true&ComputerNameMode=Random&CompactOsMode=Never&TimeZoneMode=Implicit&PartitionMode=Interactive&WindowsEditionMode=Generic&WindowsEdition=pro&UserAccountMode=InteractiveLocal&PasswordExpirationMode=Unlimited&LockoutMode=Default&HideFiles=Hidden&TaskbarSearch=Box&TaskbarIconsMode=Default&DisableBingResults=true&StartTilesMode=Empty&StartPinsMode=Empty&HardenSystemDriveAcl=true&DeleteWindowsOld=true&EffectsMode=Default&DesktopIconsMode=Default&WifiMode=Interactive&ExpressSettings=Interactive&KeysMode=Skip&ColorMode=Default&WallpaperMode=Default&RemoveRecall=true&SystemScript0=%40echo+off%0D%0A%3A%3A+https%3A%2F%2Fprivacy.sexy+%E2%80%94+v0.13.7+%E2%80%94+Wed%2C+12+Mar+2025+03%3A55%3A24+GMT%0D%0A%3A%3A+Ensure+PowerShell+is+available%0D%0Awhere+PowerShell+%3Enul+2%3E%261+%7C%7C+%28%0D%0A++++echo+PowerShell+is+not+available.+Please+install+or+enable+PowerShell.%0D%0A++++pause+%26+exit+1%0D%0A%29%0D%0A%3A%3A+Ensure+admin+privileges%0D%0Afltmc+%3Enul+2%3E%261+%7C%7C+%28%0D%0A++++echo+Administrator+privileges+are+required.%0D%0A++++PowerShell+Start+-Verb+RunAs+%27%250%27+2%3E+nul+%7C%7C+%28%0D%0A++++++++echo+Right-click+on+the+script+and+select+%22Run+as+administrator%22.%0D%0A++++++++pause+%26+exit+1%0D%0A++++%29%0D%0A++++exit+0%0D%0A%29%0D%0A%3A%3A+Initialize+environment%0D%0Asetlocal+EnableExtensions+DisableDelayedExpansion%0D%0A%0D%0A%0D%0A%3A%3A+%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%0D%0A%3A%3A+%2D%2D%2D%2D%2D%2D%2D%2D-Disable+Windows+Update+driver+downloads%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%0D%0A%3A%3A+%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%0D%0Aecho+%2D%2D-+Disable+Windows+Update+driver+downloads%0D%0A%3A%3A+Set+the+registry+value%3A+%22HKLM%5CSOFTWARE%5CPolicies%5CMicrosoft%5CWindows%5CWindowsUpdate%21ExcludeWUDriversInQualityUpdate%22%0D%0APowerShell+-ExecutionPolicy+Unrestricted+-Command+%22%24registryPath+%3D+%27HKLM%5CSOFTWARE%5CPolicies%5CMicrosoft%5CWindows%5CWindowsUpdate%27%3B+%24data+%3D+%271%27%3B+reg+add+%27HKLM%5CSOFTWARE%5CPolicies%5CMicrosoft%5CWindows%5CWindowsUpdate%27+%2Fv+%27ExcludeWUDriversInQualityUpdate%27+%2Ft+%27REG_DWORD%27+%2Fd+%22%5E%22%22%24data%22%5E%22%22+%2Ff%22%0D%0A%3A%3A+Set+the+registry+value%3A+%22HKLM%5CSOFTWARE%5CMicrosoft%5CWindowsUpdate%5CUX%5CSettings%21ExcludeWUDriversInQualityUpdate%22%0D%0APowerShell+-ExecutionPolicy+Unrestricted+-Command+%22%24registryPath+%3D+%27HKLM%5CSOFTWARE%5CMicrosoft%5CWindowsUpdate%5CUX%5CSettings%27%3B+%24data+%3D+%271%27%3B+reg+add+%27HKLM%5CSOFTWARE%5CMicrosoft%5CWindowsUpdate%5CUX%5CSettings%27+%2Fv+%27ExcludeWUDriversInQualityUpdate%27+%2Ft+%27REG_DWORD%27+%2Fd+%22%5E%22%22%24data%22%5E%22%22+%2Ff%22%0D%0A%3A%3A+Set+the+registry+value%3A+%22HKLM%5CSOFTWARE%5CMicrosoft%5CWindowsUpdate%5CUpdatePolicy%5CPolicyState%21ExcludeWUDrivers%22%0D%0APowerShell+-ExecutionPolicy+Unrestricted+-Command+%22%24registryPath+%3D+%27HKLM%5CSOFTWARE%5CMicrosoft%5CWindowsUpdate%5CUpdatePolicy%5CPolicyState%27%3B+%24data+%3D+%271%27%3B+reg+add+%27HKLM%5CSOFTWARE%5CMicrosoft%5CWindowsUpdate%5CUpdatePolicy%5CPolicyState%27+%2Fv+%27ExcludeWUDrivers%27+%2Ft+%27REG_DWORD%27+%2Fd+%22%5E%22%22%24data%22%5E%22%22+%2Ff%22%0D%0A%3A%3A+Set+the+registry+value%3A+%22HKLM%5CSOFTWARE%5CMicrosoft%5CPolicyManager%5Cdefault%5CUpdate%5CExcludeWUDriversInQualityUpdate%21value%22%0D%0APowerShell+-ExecutionPolicy+Unrestricted+-Command+%22%24registryPath+%3D+%27HKLM%5CSOFTWARE%5CMicrosoft%5CPolicyManager%5Cdefault%5CUpdate%5CExcludeWUDriversInQualityUpdate%27%3B+%24data+%3D+%271%27%3B+reg+add+%27HKLM%5CSOFTWARE%5CMicrosoft%5CPolicyManager%5Cdefault%5CUpdate%5CExcludeWUDriversInQualityUpdate%27+%2Fv+%27value%27+%2Ft+%27REG_DWORD%27+%2Fd+%22%5E%22%22%24data%22%5E%22%22+%2Ff%22%0D%0A%3A%3A+Set+the+registry+value%3A+%22HKLM%5CSOFTWARE%5CMicrosoft%5CPolicyManager%5Ccurrent%5Cdevice%5CUpdate%21ExcludeWUDriversInQualityUpdate%22%0D%0APowerShell+-ExecutionPolicy+Unrestricted+-Command+%22%24registryPath+%3D+%27HKLM%5CSOFTWARE%5CMicrosoft%5CPolicyManager%5Ccurrent%5Cdevice%5CUpdate%27%3B+%24data+%3D+%271%27%3B+reg+add+%27HKLM%5CSOFTWARE%5CMicrosoft%5CPolicyManager%5Ccurrent%5Cdevice%5CUpdate%27+%2Fv+%27ExcludeWUDriversInQualityUpdate%27+%2Ft+%27REG_DWORD%27+%2Fd+%22%5E%22%22%24data%22%5E%22%22+%2Ff%22%0D%0A%3A%3A+Set+the+registry+value%3A+%22HKLM%5CSOFTWARE%5CMicrosoft%5CPolicyManager%5Cdefault%5CUpdate%21ExcludeWUDriversInQualityUpdate%22%0D%0APowerShell+-ExecutionPolicy+Unrestricted+-Command+%22%24registryPath+%3D+%27HKLM%5CSOFTWARE%5CMicrosoft%5CPolicyManager%5Cdefault%5CUpdate%27%3B+%24data+%3D+%271%27%3B+reg+add+%27HKLM%5CSOFTWARE%5CMicrosoft%5CPolicyManager%5Cdefault%5CUpdate%27+%2Fv+%27ExcludeWUDriversInQualityUpdate%27+%2Ft+%27REG_DWORD%27+%2Fd+%22%5E%22%22%24data%22%5E%22%22+%2Ff%22%0D%0A%3A%3A+Set+the+registry+value%3A+%22HKLM%5CSOFTWARE%5CMicrosoft%5CWindows%5CWindowsUpdate%21ExcludeWUDriversInQualityUpdate%22%0D%0APowerShell+-ExecutionPolicy+Unrestricted+-Command+%22%24registryPath+%3D+%27HKLM%5CSOFTWARE%5CMicrosoft%5CWindows%5CWindowsUpdate%27%3B+%24data+%3D+%271%27%3B+reg+add+%27HKLM%5CSOFTWARE%5CMicrosoft%5CWindows%5CWindowsUpdate%27+%2Fv+%27ExcludeWUDriversInQualityUpdate%27+%2Ft+%27REG_DWORD%27+%2Fd+%22%5E%22%22%24data%22%5E%22%22+%2Ff%22%0D%0A%3A%3A+%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%0D%0A%0D%0A%0D%0A%3A%3A+%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%0D%0A%3A%3A+%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D-Disable+Windows+Update+driver+search%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D-%0D%0A%3A%3A+%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%0D%0Aecho+%2D%2D-+Disable+Windows+Update+driver+search%0D%0A%3A%3A+Set+the+registry+value%3A+%22HKLM%5CSOFTWARE%5CMicrosoft%5CWindows%5CCurrentVersion%5CDriverSearching%21SearchOrderConfig%22%0D%0APowerShell+-ExecutionPolicy+Unrestricted+-Command+%22%24registryPath+%3D+%27HKLM%5CSOFTWARE%5CMicrosoft%5CWindows%5CCurrentVersion%5CDriverSearching%27%3B+%24data+%3D+%270%27%3B+reg+add+%27HKLM%5CSOFTWARE%5CMicrosoft%5CWindows%5CCurrentVersion%5CDriverSearching%27+%2Fv+%27SearchOrderConfig%27+%2Ft+%27REG_DWORD%27+%2Fd+%22%5E%22%22%24data%22%5E%22%22+%2Ff%22%0D%0A%3A%3A+Set+the+registry+value%3A+%22HKLM%5CSOFTWARE%5CPolicies%5CMicrosoft%5CWindows%5CDriverSearching%21SearchOrderConfig%22%0D%0APowerShell+-ExecutionPolicy+Unrestricted+-Command+%22%24registryPath+%3D+%27HKLM%5CSOFTWARE%5CPolicies%5CMicrosoft%5CWindows%5CDriverSearching%27%3B+%24data+%3D+%272%27%3B+reg+add+%27HKLM%5CSOFTWARE%5CPolicies%5CMicrosoft%5CWindows%5CDriverSearching%27+%2Fv+%27SearchOrderConfig%27+%2Ft+%27REG_DWORD%27+%2Fd+%22%5E%22%22%24data%22%5E%22%22+%2Ff%22%0D%0A%3A%3A+%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%0D%0A%0D%0A%0D%0A%3A%3A+%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%0D%0A%3A%3A+%2D%2D%2D%2DDisable+Windows+Update+driver+installation+wizard%2D%2D%2D%2D-%0D%0A%3A%3A+%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%0D%0Aecho+%2D%2D-+Disable+Windows+Update+driver+installation+wizard%0D%0A%3A%3A+Set+the+registry+value%3A+%22HKLM%5CSoftware%5CPolicies%5CMicrosoft%5CWindows%5CDriverSearching%21DriverUpdateWizardWuSearchEnabled%22%0D%0APowerShell+-ExecutionPolicy+Unrestricted+-Command+%22%24registryPath+%3D+%27HKLM%5CSoftware%5CPolicies%5CMicrosoft%5CWindows%5CDriverSearching%27%3B+%24data+%3D+%270%27%3B+reg+add+%27HKLM%5CSoftware%5CPolicies%5CMicrosoft%5CWindows%5CDriverSearching%27+%2Fv+%27DriverUpdateWizardWuSearchEnabled%27+%2Ft+%27REG_DWORD%27+%2Fd+%22%5E%22%22%24data%22%5E%22%22+%2Ff%22%0D%0A%3A%3A+Set+the+registry+value%3A+%22HKLM%5CSoftware%5CMicrosoft%5CWindows%5CCurrentVersion%5CDriverSearching%21DriverUpdateWizardWuSearchEnabled%22%0D%0APowerShell+-ExecutionPolicy+Unrestricted+-Command+%22%24registryPath+%3D+%27HKLM%5CSoftware%5CMicrosoft%5CWindows%5CCurrentVersion%5CDriverSearching%27%3B+%24data+%3D+%270%27%3B+reg+add+%27HKLM%5CSoftware%5CMicrosoft%5CWindows%5CCurrentVersion%5CDriverSearching%27+%2Fv+%27DriverUpdateWizardWuSearchEnabled%27+%2Ft+%27REG_DWORD%27+%2Fd+%22%5E%22%22%24data%22%5E%22%22+%2Ff%22%0D%0A%3A%3A+Set+the+registry+value%3A+%22HKLM%5CSoftware%5CMicrosoft%5CWindows%5CDriverSearching%21DriverUpdateWizardWuSearchEnabled%22%0D%0APowerShell+-ExecutionPolicy+Unrestricted+-Command+%22%24registryPath+%3D+%27HKLM%5CSoftware%5CMicrosoft%5CWindows%5CDriverSearching%27%3B+%24data+%3D+%270%27%3B+reg+add+%27HKLM%5CSoftware%5CMicrosoft%5CWindows%5CDriverSearching%27+%2Fv+%27DriverUpdateWizardWuSearchEnabled%27+%2Ft+%27REG_DWORD%27+%2Fd+%22%5E%22%22%24data%22%5E%22%22+%2Ff%22%0D%0A%3A%3A+%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%0D%0A%0D%0A%0D%0A%3A%3A+%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%0D%0A%3A%3A+%2D%2D%2D%2D%2D%2DDisable+Windows+Update+fallback+driver+search%2D%2D%2D%2D%2D%2D-%0D%0A%3A%3A+%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%0D%0Aecho+%2D%2D-+Disable+Windows+Update+fallback+driver+search%0D%0A%3A%3A+Set+the+registry+value%3A+%22HKLM%5CSoftware%5CPolicies%5CMicrosoft%5CWindows%5CDriverSearching%21DontSearchWindowsUpdate%22%0D%0APowerShell+-ExecutionPolicy+Unrestricted+-Command+%22%24registryPath+%3D+%27HKLM%5CSoftware%5CPolicies%5CMicrosoft%5CWindows%5CDriverSearching%27%3B+%24data+%3D+%271%27%3B+reg+add+%27HKLM%5CSoftware%5CPolicies%5CMicrosoft%5CWindows%5CDriverSearching%27+%2Fv+%27DontSearchWindowsUpdate%27+%2Ft+%27REG_DWORD%27+%2Fd+%22%5E%22%22%24data%22%5E%22%22+%2Ff%22%0D%0A%3A%3A+%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%0D%0A%0D%0A%0D%0A%3A%3A+%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%0D%0A%3A%3A+%2D%2D%2D%2D%2D%2DDisable+Windows+Update+driver+download+server%2D%2D%2D%2D%2D%2D-%0D%0A%3A%3A+%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%0D%0Aecho+%2D%2D-+Disable+Windows+Update+driver+download+server%0D%0A%3A%3A+Set+the+registry+value%3A+%22HKLM%5CSoftware%5CPolicies%5CMicrosoft%5CWindows%5CDriverSearching%21DriverServerSelection%22%0D%0APowerShell+-ExecutionPolicy+Unrestricted+-Command+%22%24registryPath+%3D+%27HKLM%5CSoftware%5CPolicies%5CMicrosoft%5CWindows%5CDriverSearching%27%3B+%24data+%3D+%271%27%3B+reg+add+%27HKLM%5CSoftware%5CPolicies%5CMicrosoft%5CWindows%5CDriverSearching%27+%2Fv+%27DriverServerSelection%27+%2Ft+%27REG_DWORD%27+%2Fd+%22%5E%22%22%24data%22%5E%22%22+%2Ff%22%0D%0A%3A%3A+%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%2D%0D%0A%0D%0A%0D%0A%0D%0A%3A%3A+Restore+previous+environment+settings%0D%0Aendlocal%0D%0A%3A%3A+Exit+the+script+successfully%0D%0Aexit+%2Fb+0&SystemScriptType0=Cmd&WdacMode=Skip-->
+	<settings pass="offlineServicing"></settings>
+	<settings pass="windowsPE">
+		<component name="Microsoft-Windows-International-Core-WinPE" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+			<SetupUILanguage>
+				<UILanguage>en-US</UILanguage>
+			</SetupUILanguage>
+			<InputLocale>4009:00004009</InputLocale>
+			<SystemLocale>en-IN</SystemLocale>
+			<UILanguage>en-US</UILanguage>
+			<UserLocale>en-IN</UserLocale>
+		</component>
+		<component name="Microsoft-Windows-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+			<ImageInstall>
+				<OSImage>
+					<Compact>false</Compact>
+				</OSImage>
+			</ImageInstall>
+			<UserData>
+				<ProductKey>
+					<Key>VK7JG-NPHTM-C97JM-9MPGT-3V66T</Key>
+					<WillShowUI>OnError</WillShowUI>
+				</ProductKey>
+				<AcceptEula>true</AcceptEula>
+			</UserData>
+			<UseConfigurationSet>false</UseConfigurationSet>
+		</component>
+	</settings>
+	<settings pass="generalize"></settings>
+	<settings pass="specialize">
+		<component name="Microsoft-Windows-Deployment" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+			<RunSynchronous>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>1</Order>
+					<Path>powershell.exe -WindowStyle Normal -NoProfile -Command "$xml = [xml]::new(); $xml.Load('C:\Windows\Panther\unattend.xml'); $sb = [scriptblock]::Create( $xml.unattend.Extensions.ExtractScript ); Invoke-Command -ScriptBlock $sb -ArgumentList $xml;"</Path>
+				</RunSynchronousCommand>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>2</Order>
+					<Path>powershell.exe -WindowStyle Normal -NoProfile -Command "Get-Content -LiteralPath 'C:\Windows\Setup\Scripts\Specialize.ps1' -Raw | Invoke-Expression;"</Path>
+				</RunSynchronousCommand>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>3</Order>
+					<Path>reg.exe load "HKU\DefaultUser" "C:\Users\Default\NTUSER.DAT"</Path>
+				</RunSynchronousCommand>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>4</Order>
+					<Path>powershell.exe -WindowStyle Normal -NoProfile -Command "Get-Content -LiteralPath 'C:\Windows\Setup\Scripts\DefaultUser.ps1' -Raw | Invoke-Expression;"</Path>
+				</RunSynchronousCommand>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>5</Order>
+					<Path>reg.exe unload "HKU\DefaultUser"</Path>
+				</RunSynchronousCommand>
+			</RunSynchronous>
+		</component>
+	</settings>
+	<settings pass="auditSystem"></settings>
+	<settings pass="auditUser"></settings>
+	<settings pass="oobeSystem">
+		<component name="Microsoft-Windows-International-Core" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+			<InputLocale>4009:00004009</InputLocale>
+			<SystemLocale>en-IN</SystemLocale>
+			<UILanguage>en-US</UILanguage>
+			<UserLocale>en-IN</UserLocale>
+		</component>
+		<component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+			<OOBE>
+				<HideEULAPage>true</HideEULAPage>
+				<HideWirelessSetupInOOBE>false</HideWirelessSetupInOOBE>
+				<HideOnlineAccountScreens>true</HideOnlineAccountScreens>
+			</OOBE>
+			<FirstLogonCommands>
+				<SynchronousCommand wcm:action="add">
+					<Order>1</Order>
+					<CommandLine>powershell.exe -WindowStyle Normal -NoProfile -Command "Get-Content -LiteralPath 'C:\Windows\Setup\Scripts\FirstLogon.ps1' -Raw | Invoke-Expression;"</CommandLine>
+				</SynchronousCommand>
+			</FirstLogonCommands>
+		</component>
+	</settings>
+	<Extensions xmlns="https://schneegans.de/windows/unattend-generator/">
+		<ExtractScript>
+param(
+    [xml] $Document
+);
+
+foreach( $file in $Document.unattend.Extensions.File ) {
+    $path = [System.Environment]::ExpandEnvironmentVariables( $file.GetAttribute( 'path' ) );
+    mkdir -Path( $path | Split-Path -Parent ) -ErrorAction 'SilentlyContinue';
+    $encoding = switch( [System.IO.Path]::GetExtension( $path ) ) {
+        { $_ -in '.ps1', '.xml' } { [System.Text.Encoding]::UTF8; }
+        { $_ -in '.reg', '.vbs', '.js' } { [System.Text.UnicodeEncoding]::new( $false, $true ); }
+        default { [System.Text.Encoding]::Default; }
+    };
+    $bytes = $encoding.GetPreamble() + $encoding.GetBytes( $file.InnerText.Trim() );
+    [System.IO.File]::WriteAllBytes( $path, $bytes );
+}
+		</ExtractScript>
+		<File path="C:\Windows\Setup\Scripts\RemoveFeatures.ps1">
+$selectors = @(
+	'Recall';
+);
+$getCommand = {
+  Get-WindowsOptionalFeature -Online | Where-Object -Property 'State' -NotIn -Value @(
+    'Disabled';
+    'DisabledWithPayloadRemoved';
+  );
+};
+$filterCommand = {
+  $_.FeatureName -eq $selector;
+};
+$removeCommand = {
+  [CmdletBinding()]
+  param(
+    [Parameter( Mandatory, ValueFromPipeline )]
+    $InputObject
+  );
+  process {
+    $InputObject | Disable-WindowsOptionalFeature -Online -Remove -NoRestart -ErrorAction 'Continue';
+  }
+};
+$type = 'Feature';
+$logfile = 'C:\Windows\Setup\Scripts\RemoveFeatures.log';
+&amp; {
+	$installed = &amp; $getCommand;
+	foreach( $selector in $selectors ) {
+		$result = [ordered] @{
+			Selector = $selector;
+		};
+		$found = $installed | Where-Object -FilterScript $filterCommand;
+		if( $found ) {
+			$result.Output = $found | &amp; $removeCommand;
+			if( $? ) {
+				$result.Message = "$type removed.";
+			} else {
+				$result.Message = "$type not removed.";
+				$result.Error = $Error[0];
+			}
+		} else {
+			$result.Message = "$type not installed.";
+		}
+		$result | ConvertTo-Json -Depth 3 -Compress;
+	}
+} *&gt;&amp;1 &gt;&gt; $logfile;
+		</File>
+		<File path="C:\Windows\Setup\Scripts\SetStartPins.ps1">
+$json = '{"pinnedList":[]}';
+if( [System.Environment]::OSVersion.Version.Build -lt 20000 ) {
+	return;
+}
+$key = 'Registry::HKLM\SOFTWARE\Microsoft\PolicyManager\current\device\Start';
+New-Item -Path $key -ItemType 'Directory' -ErrorAction 'SilentlyContinue';
+Set-ItemProperty -LiteralPath $key -Name 'ConfigureStartPins' -Value $json -Type 'String';
+		</File>
+		<File path="C:\Users\Default\AppData\Local\Microsoft\Windows\Shell\LayoutModification.xml">
+&lt;LayoutModificationTemplate Version="1" xmlns="http://schemas.microsoft.com/Start/2014/LayoutModification"&gt;
+	&lt;LayoutOptions StartTileGroupCellWidth="6" /&gt;
+	&lt;DefaultLayoutOverride&gt;
+		&lt;StartLayoutCollection&gt;
+			&lt;StartLayout GroupCellWidth="6" xmlns="http://schemas.microsoft.com/Start/2014/FullDefaultLayout" /&gt;
+		&lt;/StartLayoutCollection&gt;
+	&lt;/DefaultLayoutOverride&gt;
+&lt;/LayoutModificationTemplate&gt;
+		</File>
+		<File path="C:\Windows\Setup\Scripts\unattend-01.cmd">
+@echo off
+:: https://privacy.sexy &#x2014; v0.13.7 &#x2014; Wed, 12 Mar 2025 03:55:24 GMT
+:: Ensure PowerShell is available
+where PowerShell &gt;nul 2&gt;&amp;1 || (
+    echo PowerShell is not available. Please install or enable PowerShell.
+    pause &amp; exit 1
+)
+:: Ensure admin privileges
+fltmc &gt;nul 2&gt;&amp;1 || (
+    echo Administrator privileges are required.
+    PowerShell Start -Verb RunAs '%0' 2&gt; nul || (
+        echo Right-click on the script and select "Run as administrator".
+        pause &amp; exit 1
+    )
+    exit 0
+)
+:: Initialize environment
+setlocal EnableExtensions DisableDelayedExpansion
+
+
+:: ----------------------------------------------------------
+:: ---------Disable Windows Update driver downloads----------
+:: ----------------------------------------------------------
+echo --- Disable Windows Update driver downloads
+:: Set the registry value: "HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate!ExcludeWUDriversInQualityUpdate"
+PowerShell -ExecutionPolicy Unrestricted -Command "$registryPath = 'HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate'; $data = '1'; reg add 'HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate' /v 'ExcludeWUDriversInQualityUpdate' /t 'REG_DWORD' /d "^""$data"^"" /f"
+:: Set the registry value: "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings!ExcludeWUDriversInQualityUpdate"
+PowerShell -ExecutionPolicy Unrestricted -Command "$registryPath = 'HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings'; $data = '1'; reg add 'HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings' /v 'ExcludeWUDriversInQualityUpdate' /t 'REG_DWORD' /d "^""$data"^"" /f"
+:: Set the registry value: "HKLM\SOFTWARE\Microsoft\WindowsUpdate\UpdatePolicy\PolicyState!ExcludeWUDrivers"
+PowerShell -ExecutionPolicy Unrestricted -Command "$registryPath = 'HKLM\SOFTWARE\Microsoft\WindowsUpdate\UpdatePolicy\PolicyState'; $data = '1'; reg add 'HKLM\SOFTWARE\Microsoft\WindowsUpdate\UpdatePolicy\PolicyState' /v 'ExcludeWUDrivers' /t 'REG_DWORD' /d "^""$data"^"" /f"
+:: Set the registry value: "HKLM\SOFTWARE\Microsoft\PolicyManager\default\Update\ExcludeWUDriversInQualityUpdate!value"
+PowerShell -ExecutionPolicy Unrestricted -Command "$registryPath = 'HKLM\SOFTWARE\Microsoft\PolicyManager\default\Update\ExcludeWUDriversInQualityUpdate'; $data = '1'; reg add 'HKLM\SOFTWARE\Microsoft\PolicyManager\default\Update\ExcludeWUDriversInQualityUpdate' /v 'value' /t 'REG_DWORD' /d "^""$data"^"" /f"
+:: Set the registry value: "HKLM\SOFTWARE\Microsoft\PolicyManager\current\device\Update!ExcludeWUDriversInQualityUpdate"
+PowerShell -ExecutionPolicy Unrestricted -Command "$registryPath = 'HKLM\SOFTWARE\Microsoft\PolicyManager\current\device\Update'; $data = '1'; reg add 'HKLM\SOFTWARE\Microsoft\PolicyManager\current\device\Update' /v 'ExcludeWUDriversInQualityUpdate' /t 'REG_DWORD' /d "^""$data"^"" /f"
+:: Set the registry value: "HKLM\SOFTWARE\Microsoft\PolicyManager\default\Update!ExcludeWUDriversInQualityUpdate"
+PowerShell -ExecutionPolicy Unrestricted -Command "$registryPath = 'HKLM\SOFTWARE\Microsoft\PolicyManager\default\Update'; $data = '1'; reg add 'HKLM\SOFTWARE\Microsoft\PolicyManager\default\Update' /v 'ExcludeWUDriversInQualityUpdate' /t 'REG_DWORD' /d "^""$data"^"" /f"
+:: Set the registry value: "HKLM\SOFTWARE\Microsoft\Windows\WindowsUpdate!ExcludeWUDriversInQualityUpdate"
+PowerShell -ExecutionPolicy Unrestricted -Command "$registryPath = 'HKLM\SOFTWARE\Microsoft\Windows\WindowsUpdate'; $data = '1'; reg add 'HKLM\SOFTWARE\Microsoft\Windows\WindowsUpdate' /v 'ExcludeWUDriversInQualityUpdate' /t 'REG_DWORD' /d "^""$data"^"" /f"
+:: ----------------------------------------------------------
+
+
+:: ----------------------------------------------------------
+:: -----------Disable Windows Update driver search-----------
+:: ----------------------------------------------------------
+echo --- Disable Windows Update driver search
+:: Set the registry value: "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\DriverSearching!SearchOrderConfig"
+PowerShell -ExecutionPolicy Unrestricted -Command "$registryPath = 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\DriverSearching'; $data = '0'; reg add 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\DriverSearching' /v 'SearchOrderConfig' /t 'REG_DWORD' /d "^""$data"^"" /f"
+:: Set the registry value: "HKLM\SOFTWARE\Policies\Microsoft\Windows\DriverSearching!SearchOrderConfig"
+PowerShell -ExecutionPolicy Unrestricted -Command "$registryPath = 'HKLM\SOFTWARE\Policies\Microsoft\Windows\DriverSearching'; $data = '2'; reg add 'HKLM\SOFTWARE\Policies\Microsoft\Windows\DriverSearching' /v 'SearchOrderConfig' /t 'REG_DWORD' /d "^""$data"^"" /f"
+:: ----------------------------------------------------------
+
+
+:: ----------------------------------------------------------
+:: ----Disable Windows Update driver installation wizard-----
+:: ----------------------------------------------------------
+echo --- Disable Windows Update driver installation wizard
+:: Set the registry value: "HKLM\Software\Policies\Microsoft\Windows\DriverSearching!DriverUpdateWizardWuSearchEnabled"
+PowerShell -ExecutionPolicy Unrestricted -Command "$registryPath = 'HKLM\Software\Policies\Microsoft\Windows\DriverSearching'; $data = '0'; reg add 'HKLM\Software\Policies\Microsoft\Windows\DriverSearching' /v 'DriverUpdateWizardWuSearchEnabled' /t 'REG_DWORD' /d "^""$data"^"" /f"
+:: Set the registry value: "HKLM\Software\Microsoft\Windows\CurrentVersion\DriverSearching!DriverUpdateWizardWuSearchEnabled"
+PowerShell -ExecutionPolicy Unrestricted -Command "$registryPath = 'HKLM\Software\Microsoft\Windows\CurrentVersion\DriverSearching'; $data = '0'; reg add 'HKLM\Software\Microsoft\Windows\CurrentVersion\DriverSearching' /v 'DriverUpdateWizardWuSearchEnabled' /t 'REG_DWORD' /d "^""$data"^"" /f"
+:: Set the registry value: "HKLM\Software\Microsoft\Windows\DriverSearching!DriverUpdateWizardWuSearchEnabled"
+PowerShell -ExecutionPolicy Unrestricted -Command "$registryPath = 'HKLM\Software\Microsoft\Windows\DriverSearching'; $data = '0'; reg add 'HKLM\Software\Microsoft\Windows\DriverSearching' /v 'DriverUpdateWizardWuSearchEnabled' /t 'REG_DWORD' /d "^""$data"^"" /f"
+:: ----------------------------------------------------------
+
+
+:: ----------------------------------------------------------
+:: ------Disable Windows Update fallback driver search-------
+:: ----------------------------------------------------------
+echo --- Disable Windows Update fallback driver search
+:: Set the registry value: "HKLM\Software\Policies\Microsoft\Windows\DriverSearching!DontSearchWindowsUpdate"
+PowerShell -ExecutionPolicy Unrestricted -Command "$registryPath = 'HKLM\Software\Policies\Microsoft\Windows\DriverSearching'; $data = '1'; reg add 'HKLM\Software\Policies\Microsoft\Windows\DriverSearching' /v 'DontSearchWindowsUpdate' /t 'REG_DWORD' /d "^""$data"^"" /f"
+:: ----------------------------------------------------------
+
+
+:: ----------------------------------------------------------
+:: ------Disable Windows Update driver download server-------
+:: ----------------------------------------------------------
+echo --- Disable Windows Update driver download server
+:: Set the registry value: "HKLM\Software\Policies\Microsoft\Windows\DriverSearching!DriverServerSelection"
+PowerShell -ExecutionPolicy Unrestricted -Command "$registryPath = 'HKLM\Software\Policies\Microsoft\Windows\DriverSearching'; $data = '1'; reg add 'HKLM\Software\Policies\Microsoft\Windows\DriverSearching' /v 'DriverServerSelection' /t 'REG_DWORD' /d "^""$data"^"" /f"
+:: ----------------------------------------------------------
+
+
+
+:: Restore previous environment settings
+endlocal
+:: Exit the script successfully
+exit /b 0
+		</File>
+		<File path="C:\Windows\Setup\Scripts\Specialize.ps1">
+$scripts = @(
+	{
+		reg.exe add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\OOBE" /v BypassNRO /t REG_DWORD /d 1 /f;
+	};
+	{
+		Get-Content -LiteralPath 'C:\Windows\Setup\Scripts\RemoveFeatures.ps1' -Raw | Invoke-Expression;
+	};
+	{
+		net.exe accounts /maxpwage:UNLIMITED;
+	};
+	{
+		icacls.exe C:\ /remove:g "*S-1-5-11"
+	};
+	{
+		Get-Content -LiteralPath 'C:\Windows\Setup\Scripts\SetStartPins.ps1' -Raw | Invoke-Expression;
+	};
+	{
+		C:\Windows\Setup\Scripts\unattend-01.cmd;
+	};
+);
+
+&amp; {
+  [float] $complete = 0;
+  [float] $increment = 100 / $scripts.Count;
+  foreach( $script in $scripts ) {
+    Write-Progress -Activity 'Running scripts to customize your Windows installation. Do not close this window.' -PercentComplete $complete;
+    '*** Will now execute command &#xAB;{0}&#xBB;.' -f $(
+      $str = $script.ToString().Trim() -replace '\s+', ' ';
+      $max = 100;
+      if( $str.Length -le $max ) {
+        $str;
+      } else {
+        $str.Substring( 0, $max - 1 ) + '&#x2026;';
+      }
+    );
+    $start = [datetime]::Now;
+    &amp; $script;
+    '*** Finished executing command after {0:0} ms.' -f [datetime]::Now.Subtract( $start ).TotalMilliseconds;
+    "`r`n" * 3;
+    $complete += $increment;
+  }
+} *&gt;&amp;1 &gt;&gt; "C:\Windows\Setup\Scripts\Specialize.log";
+		</File>
+		<File path="C:\Windows\Setup\Scripts\DefaultUser.ps1">
+$scripts = @(
+	{
+		reg.exe add "HKU\DefaultUser\Software\Policies\Microsoft\Windows\Explorer" /v DisableSearchBoxSuggestions /t REG_DWORD /d 1 /f;
+	};
+);
+
+&amp; {
+  [float] $complete = 0;
+  [float] $increment = 100 / $scripts.Count;
+  foreach( $script in $scripts ) {
+    Write-Progress -Activity 'Running scripts to modify the default user&#x2019;&#x2019;s registry hive. Do not close this window.' -PercentComplete $complete;
+    '*** Will now execute command &#xAB;{0}&#xBB;.' -f $(
+      $str = $script.ToString().Trim() -replace '\s+', ' ';
+      $max = 100;
+      if( $str.Length -le $max ) {
+        $str;
+      } else {
+        $str.Substring( 0, $max - 1 ) + '&#x2026;';
+      }
+    );
+    $start = [datetime]::Now;
+    &amp; $script;
+    '*** Finished executing command after {0:0} ms.' -f [datetime]::Now.Subtract( $start ).TotalMilliseconds;
+    "`r`n" * 3;
+    $complete += $increment;
+  }
+} *&gt;&amp;1 &gt;&gt; "C:\Windows\Setup\Scripts\DefaultUser.log";
+		</File>
+		<File path="C:\Windows\Setup\Scripts\FirstLogon.ps1">
+$scripts = @(
+	{
+		cmd.exe /c "rmdir C:\Windows.old";
+	};
+);
+
+&amp; {
+  [float] $complete = 0;
+  [float] $increment = 100 / $scripts.Count;
+  foreach( $script in $scripts ) {
+    Write-Progress -Activity 'Running scripts to finalize your Windows installation. Do not close this window.' -PercentComplete $complete;
+    '*** Will now execute command &#xAB;{0}&#xBB;.' -f $(
+      $str = $script.ToString().Trim() -replace '\s+', ' ';
+      $max = 100;
+      if( $str.Length -le $max ) {
+        $str;
+      } else {
+        $str.Substring( 0, $max - 1 ) + '&#x2026;';
+      }
+    );
+    $start = [datetime]::Now;
+    &amp; $script;
+    '*** Finished executing command after {0:0} ms.' -f [datetime]::Now.Subtract( $start ).TotalMilliseconds;
+    "`r`n" * 3;
+    $complete += $increment;
+  }
+} *&gt;&amp;1 &gt;&gt; "C:\Windows\Setup\Scripts\FirstLogon.log";
+		</File>
+	</Extensions>
+</unattend>
